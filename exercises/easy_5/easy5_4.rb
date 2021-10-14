@@ -1,19 +1,4 @@
-#def swap(string)
-#  words = string.split(' ').map { |word| word.chars }
-#  array = []
-#  reordered_words = words.map do |word|
-#    if word.size > 2
-#      array << word.fetch(-1)
-#      word.delete_at(=1)
-#      word << word
-#      word.delete_at(0)
-#    else
-#      word.reverse
-#    end
-#  end
-#  reordered_words.map { |x| x.join }
-#  reordered_words.join
-#end
+#4 Letter Swap (did this one with wolf)
 def swap(string)
 words = string.split(' ').map { |word| word.chars }
   words.map do |word|
@@ -37,5 +22,4 @@ end
 puts swap('Oh what a wonderful day it is')
 puts swap('Abcde')
 puts swap('a')
-
 

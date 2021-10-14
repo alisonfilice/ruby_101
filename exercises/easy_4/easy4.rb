@@ -142,4 +142,107 @@ running_total([14, 11, 7, 15, 20]) #== [14, 25, 32, 47, 67]
 running_total([3]) #== [3]
 running_total([]) #== []
 
-#
+#7. Convert string to a number without to_i
+
+def string_to_integer(string)
+number_hash = { 
+  '1'=> 1, '2'=> 2, '3'=> 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8'=> 8, '9'=> 9, '0'=> 0 
+}
+  int_array = string.chars.map { |chars| number_hash[chars] }
+  
+  value = 0
+  int_array.each { |int| value = value * 10 + int}
+  value
+  
+end   
+  
+string_to_integer('4321') == 4321
+string_to_integer('570') == 570
+
+#8. Convert a string to signed number
+=begin
+Input - string number, with leading +, -, or no leading
+Output - correspdonding integer, with - sign if negative
+Explicit Rules 
+- no standard conversion methods
+- no sign or + sign should return a positive number
+- neg sign should return a negative number
+Examples
+string_to_signed_integer('4321') == 4321
+string_to_signed_integer('-570') == -570
+string_to_signed_integer('+100') == 100
+Data Structure
+Hash conversion for decimals and signs
+Array
+Algorithm
+- make hash conversion for digits
+- turn string into an array of characters
+- if first array character is +, remove it
+- do the same as last problem for positive numbers
+  - iterate through array and calculate number
+- for negative numbers remove first character
+  - account for negative in calculation of integer
+  - iterate through array and calculate number
+=end
+def string_to_signed_integer(string)
+  case string[0]
+  when '-' then -string_to_integer(string[1..-1])
+  when '+' then string_to_integer(string[1..-1])
+  else          string_to_integer(string)
+  end
+end
+
+string_to_signed_integer('4321') == 4321
+string_to_signed_integer('-570') == -570
+string_to_signed_integer('+100') == 100
+
+#9. Convert a number to a string
+=begin
+Input - positive integer or zero
+Output - string version of number
+Explicit Rule - no standard methods
+Examples 
+integer_to_string(4321) == '4321'
+integer_to_string(0) == '0'
+integer_to_string(5000) == '5000'
+Data Structure
+Hash 
+Array
+Algorithm
+- split numbers into an array of decimals
+- make hash converting number to "string letter" (invert previous hash)
+- iterate through decimals and assign string values
+- join array
+=end 
+
+def integer_to_string(integer)
+  
+decimal_array = integer.digits.reverse
+
+integer_keys = number_hash = { 
+  '1'=> 1, '2'=> 2, '3'=> 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8'=> 8, '9'=> 9, '0'=> 0 
+}.invert
+
+decimal_array.map { |decimal| integer_keys[decimal]}
+decimal_array.join
+
+end 
+
+integer_to_string(4321) == '4321'
+integer_to_string(0) == '0'
+integer_to_string(5000) == '5000'
+
+# Convert a signed number to a string
+
+def signed_integer_to_string(integer)
+  case integer <=> 0
+  when -1 then integer_to_string(-integer).prepend("-")
+  when +1 then integer_to_string(integer).prepend("+")
+  else integer_to_string(integer)
+  end
+end 
+
+signed_integer_to_string(4321) == '+4321'
+signed_integer_to_string(-123) == '-123'
+signed_integer_to_string(0) == '0'
+
