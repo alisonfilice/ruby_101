@@ -1,12 +1,14 @@
 require 'pry'
-
+# Constants
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
                 [[1, 5, 9], [3, 5, 7]]
+WINNING_SCORE = 5
 
+# Methods
 def prompt(msg)
   puts "=> #{msg}"
 end
@@ -58,6 +60,7 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
+    prompt "Welcome to Tic Tac Toe! Try to beat the computer 5 times and you will win!"
     prompt "Choose a square to place a piece (#{joinor(empty_squares(brd))}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
@@ -94,7 +97,15 @@ def detect_winner(brd)
   nil
 end
 
+def winner_of_5?(player, computer)
+  player >= WINNING_SCORE || COMPUTER >= WINNING_SCORE
+end
 
+def champion(player)
+   player >= 5 ? 'Player' : "Computer"
+end
+
+# Game Loop
 loop do
   board = initialize_board
 
@@ -115,16 +126,6 @@ loop do
   else
     prompt "It's a tie!"
   end
-
- player_score = 0
- computer_score = 0
-
- if someone_won?(board) == "Player"
-   player_score += 1
- elsif someone_won?(board) == 'Computer'
-   computer_score += 1
- end
- prompt "Player's score is: #{player_score}; Computer's score is: #{computer_score}"
 
   prompt "Play again? (y or n)"
   answer = gets.chomp
